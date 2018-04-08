@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->call(RolesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(UserRoleTableSeeder::class);
+
+        $this->call(LanguagesTableSeeder::class);
+        $this->call(BooksTableSeeder::class);
+
+        $this->call(TypesTableSeeder::class);
+        $this->call(PublishersTableSeeder::class);
+        $this->call(GenresTableSeeder::class);
+        $this->call(AuthorsTableSeeder::class);
+
+        $this->call(BookTypesTableSeeder::class);
+        $this->call(BookGenresTableSeeder::class);
+        $this->call(BookAuthorsTableSeeder::class);
+        $this->call(BookPublisherTableSeeder::class);
+
+        $this->call(ImageTypesTableSeeder::class);
+        $this->call(ImagesTableSeeder::class);
+        $this->call(BookImagesTableSeeder::class);
+
+
+        $this->call(CustomersTableSeeder::class);
+    }
+}
