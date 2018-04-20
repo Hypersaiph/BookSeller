@@ -24,7 +24,7 @@ Route::prefix('admin')->group(function () {
         return view('user.blocked');
     });
     Route::resource('dashboard', 'Admin\DashboardController', ['except' => [
-        'create', 'store', 'update', 'destroy', 'show', 'edit'
+        'create','store','update','destroy','show','edit'
     ]]);
     Route::resource('users', 'Admin\UserController', ['except' => [
         'show'
@@ -42,16 +42,16 @@ Route::prefix('admin')->group(function () {
     ]]);
     Route::resource('customers', 'Admin\CustomerController');
     Route::resource('sales', 'Admin\SaleController', ['except' => [
-        'show'
+        'create','store','show','edit','update'
     ]]);
     Route::resource('accounts', 'Admin\AccountController', ['except' => [
-        'show'
+        'create','store','show','edit','update','destroy'
     ]]);
     Route::resource('news', 'Admin\NewsController', ['except' => [
-        'show'
+        'show','edit','update'
     ]]);
     Route::resource('inflows', 'Admin\InflowController', ['except' => [
-        'show'
+        'create','store','show','edit','destroy'
     ]]);
 });
 Route::get('/book/{id}', 'Admin\UserController@show')->name('book_profile');

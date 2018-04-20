@@ -16,7 +16,7 @@ class InflowsTableSeeder extends Seeder
         foreach ($books as $book){
             DB::table('inflows')->insert([
                 'book_type_id' => $book->id,
-                'quantity' => 5,
+                'quantity' => 45,
                 'created_at' => '2017-08-23 23:18:21',
                 'updated_at' => '2017-08-23 23:18:21'
             ]);

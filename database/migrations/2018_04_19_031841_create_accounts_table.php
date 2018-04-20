@@ -20,6 +20,7 @@ class CreateAccountsTable extends Migration
             $table->decimal('amount', 8,2)->nullable();
             $table->decimal('penalty', 8,2)->nullable();
             $table->date('payment_date')->nullable();
+            $table->date('limit_payment_date')->nullable();
             $table->boolean('is_active')->nullable();
             $table->foreign('sale_id')->references('id')->on('sales')->nullable();
             $table->timestamps();

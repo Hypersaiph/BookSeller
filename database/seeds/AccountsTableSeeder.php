@@ -17,6 +17,7 @@ class AccountsTableSeeder extends Seeder
             'amount' => 350.00,
             'penalty' => 0.00,
             'payment_date' => '2018-04-18',
+            'limit_payment_date' => null,
             'is_active' => false,
             'created_at' => '2018-04-18 23:18:21',
             'updated_at' => '2018-04-18 23:18:21'
@@ -26,7 +27,8 @@ class AccountsTableSeeder extends Seeder
             'code' => '180000002-1',
             'amount' => 168.00,
             'penalty' => 0.00,
-            'payment_date' => '2018-04-20',
+            'payment_date' => '2018-04-15',
+            'limit_payment_date' => '2018-04-20',
             'is_active' => true,
             'created_at' => '2018-04-18 23:18:21',
             'updated_at' => '2018-04-18 23:18:21'
@@ -36,7 +38,8 @@ class AccountsTableSeeder extends Seeder
             'code' => '180000002-2',
             'amount' => 168.00,
             'penalty' => 0.00,
-            'payment_date' => '2018-05-20',
+            'payment_date' => '2018-05-15',
+            'limit_payment_date' => '2018-05-20',
             'is_active' => true,
             'created_at' => '2018-04-18 23:18:21',
             'updated_at' => '2018-04-18 23:18:21'
@@ -46,7 +49,8 @@ class AccountsTableSeeder extends Seeder
             'code' => '180000002-3',
             'amount' => 168.00,
             'penalty' => 0.00,
-            'payment_date' => '2018-06-20',
+            'payment_date' => '2018-06-15',
+            'limit_payment_date' => '2018-06-20',
             'is_active' => true,
             'created_at' => '2018-04-18 23:18:21',
             'updated_at' => '2018-04-18 23:18:21'
@@ -56,7 +60,8 @@ class AccountsTableSeeder extends Seeder
             'code' => '180000002-4',
             'amount' => 168.00,
             'penalty' => 0.00,
-            'payment_date' => '2018-07-20',
+            'payment_date' => '2018-07-15',
+            'limit_payment_date' => '2018-07-20',
             'is_active' => true,
             'created_at' => '2018-04-18 23:18:21',
             'updated_at' => '2018-04-18 23:18:21'

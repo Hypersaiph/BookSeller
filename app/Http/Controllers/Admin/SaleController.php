@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -14,64 +15,19 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        $items_per_page = 10;
+        $search = \Request::get('search');
+        $sales = Sale::where([
+            ['code','like','%'.$search.'%'],
+            //['assigned_code', '<>', '']
+        ])
+            ->orderBy('created_at', 'desc')
+            ->paginate($items_per_page);
+        $total = $sales->total();
+        $current_page = $sales->currentPage();
+        $items_per_page = $sales->perPage();
+        return view('admin.sales.list', compact('sales', 'total', 'current_page', 'items_per_page', 'search'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -80,6 +36,9 @@ class SaleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sale = Sale::find($id);
+        $sale->delete();
+        //delete: accounts, outflows
+        return redirect()->route('sales.index');
     }
 }

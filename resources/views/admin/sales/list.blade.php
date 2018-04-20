@@ -1,24 +1,35 @@
 @extends('layouts.master')
 
 @section('title')
-    Banners
+    Ventas
 @endsection
 @section('css_assets')
     <link href="{!! asset('vendors/sweetalert/dist/sweetalert.css') !!}" type="text/css" rel="stylesheet" media="screen,projection">
 @endsection
 @section('search_big')
+    <form action="" method="GET">
+        <i class="material-icons">search</i>
+        <input type="text" name="search" class="header-search-input z-depth-2" placeholder="Búsqueda por código" @if($search)value="{{$search}}"@endif/>
+    </form>
 @endsection
 @section('search_small')
+    <form action="" method="GET">
+        <input type="text" name="search" class="header-search-input z-depth-2" placeholder="Búsqueda por código" @if($search)value="{{$search}}"@endif>
+    </form>
 @endsection
 @section('navigation')
     <div class="row">
         <div class="col s10 m6 l6">
-            <h5 class="breadcrumbs-title">Lista de Banners</h5>
+            <h5 class="breadcrumbs-title">Lista de Ventas</h5>
             <ol class="breadcrumbs">
-                <li><a href="{{ route('books.index') }}">Libros</a></li>
-                <li><a href="{{ route('books.index') }}">Lista</a></li>
-                <li><a href="{{route('books.edit', ['id'=>$book_id])}}">{{ $book_title }}</a></li>
-                <li class="active">Presentaciones</li>
+                <li><a href="{{ route('sales.index') }}">Ventas</a></li>
+                <li class="active">
+                    @if ($search)
+                        Búsqueda de: {{$search}}
+                    @else
+                        Lista
+                    @endif
+                </li>
             </ol>
         </div>
     </div>
@@ -40,44 +51,32 @@
                 <thead>
                 <tr>
                     <th >#</th>
-                    <th>Presentación</th>
-                    <th>Precio</th>
-                    <th>Páginas</th>
-                    <th>Duración</th>
-                    <th>ISBN-10</th>
-                    <th>ISBN-13</th>
-                    <th>Serial (Audiolibro)</th>
-                    <th>Peso</th>
-                    <th>Dimensiones</th>
+                    <th>Código de Venta</th>
+                    <th>Cliente</th>
+                    <th>Tipo de Venta</th>
+                    <th>Cuotas</th>
+                    <th>Interés Anual</th>
                     <th>Operaciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($book_types as $index => $data)
+                @foreach($sales as $index => $data)
                     <tr>
-                        <td>{{$index+1}}</td>
-                        <td>{{$data->type->type}}</td>
-                        <td>{{$data['price']}}</td>
-                        <td>{{$data['pages']}}</td>
-                        <td>@if($data['duration']){{date('H:i', strtotime($data['duration']))}}@endif</td>
-                        <td>{{$data['isbn10']}}</td>
-                        <td>{{$data['isbn13']}}</td>
-                        <td>{{$data['serial_cd']}}</td>
-                        <td>{{$data['weight']}}</td>
+                        <td>{{$items_per_page*($current_page - 1) + $index + 1}}</td>
+                        <td>{{$data['code']}}</td>
+                        <td>{{$data->customer->name}} {{$data->customer->surname}}</td>
+                        <td>{{$data->sale_type->type}}</td>
+                        <td>{{$data['months']}}</td>
+                        <td>{{$data['anual_interest']}}</td>
                         <td>
-                            @if($data->type->id != 3)
-                            {{$data['width']}} x {{$data['height']}} x {{$data['depth']}} cm
-                            @endif
-                        </td>
-                        <td>
-                            <a class="btn-floating waves-effect waves-light gradient-45deg-amber-amber gradient-shadow tooltipped"
-                               data-position="bottom" data-delay="10" data-tooltip="Editar"
-                               href="{{ route('book-type.edit', ['id'=>$data['id'],'book_id'=>$book_id]) }}">
-                                <i class="material-icons">edit</i>
+                            <a class="btn-floating waves-effect waves-light gradient-45deg-green-teal gradient-shadow tooltipped"
+                               data-position="bottom" data-delay="10" data-tooltip="Cuentas"
+                               href="{{ route('accounts.index', ['sale_id'=>$data['id']]) }}">
+                                <i class="material-icons">account_balance_wallet</i>
                             </a>
                             <a class="btn-floating btn-warning-cancel waves-effect waves-light red tooltipped"
                                data-position="bottom" data-delay="10" data-tooltip="Eliminar"
-                               onclick="deleteModal('{{ route('book-type.destroy', ['id'=>$data['id'],'book_id'=>$book_id]) }}')">
+                               onclick="deleteModal('{{ route('sales.destroy', ['id'=>$data['id']]) }}')">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -85,14 +84,9 @@
                 @endforeach
                 </tbody>
             </table>
-        @endif
-        @if($create == true)
-        <!-- Floating Action Button -->
-        <div class="fixed-action-btn " style="bottom: 50px; right: 19px;">
-            <a class="btn-floating btn-large waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow tooltipped" data-position="top" data-delay="10" data-tooltip="Crear" href="{{route('book-type.create', ['book_id'=>$book_id])}}">
-                <i class="material-icons">add</i>
-            </a>
-        </div><!-- Floating Action Button -->
+            <div>
+                {{ $sales->links('vendor.pagination.default') }}
+            </div>
         @endif
     </div>
 @endsection

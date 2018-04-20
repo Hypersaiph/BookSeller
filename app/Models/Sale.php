@@ -18,6 +18,9 @@ class Sale extends Model
     public function customer(){
         return $this->belongsTo('App\Models\Customer','customer_id');
     }
+    public function sale_type(){
+        return $this->belongsTo('App\Models\SaleType','sale_type_id');
+    }
     public function book_types(){
         return $this->belongsToMany('App\Models\BookType', 'outflows', 'sale_id', 'book_type_id');
     }

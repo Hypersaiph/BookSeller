@@ -9,7 +9,7 @@ class Account extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'sale_id', 'code', 'amount', 'penalty', 'payment_date', 'is_active'
+        'sale_id', 'code', 'amount', 'penalty', 'payment_date', 'limit_payment_date', 'is_active'
     ];
     protected $dates = ['created_at','updated_at','deleted_at'];
     public function sale(){

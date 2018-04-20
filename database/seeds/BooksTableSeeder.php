@@ -58,8 +58,8 @@ class BooksTableSeeder extends Seeder
             'edition' => '1',
             'publication_Date' => '2016-09-13',
             'cover_image' => '51mK82jnesL._SX330_BO1,204,203,200_.jpg',
-            'created_at' => '2017-08-23 23:18:21',
-            'updated_at' => '2017-08-23 23:18:21'
+            'created_at' => '2017-08-24 23:18:21',
+            'updated_at' => '2017-08-24 23:18:21'
         ]);
     }
 }
