@@ -23,4 +23,13 @@ class BookType extends Model
     public function publishers(){
         return $this->belongsToMany('App\Models\Publisher', 'book_publishers', 'book_type_id', 'publisher_id');
     }
+    public function sales(){
+        return $this->belongsToMany('App\Models\Sale');
+    }
+    public function outflows(){
+        return $this->hasMany('App\Models\Outflow');
+    }
+    public function inflows(){
+        return $this->hasMany('App\Models\Inflow');
+    }
 }

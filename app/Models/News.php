@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Customer extends Model
+class News extends Model
 {
     use SoftDeletes;
+    protected $table = 'news';
     protected $fillable = [
-        'surname', 'nit'
+        'user_id', 'message', 'delivery_date', 'delivery_time',
     ];
     protected $dates = ['created_at','updated_at','deleted_at'];
-    public function purchases(){
-        return $this->hasMany('App\Models\Sale');
+    public function user(){
+        return $this->belongsTo('App\User');
     }
 }

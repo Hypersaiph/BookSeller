@@ -25,7 +25,6 @@ class CreateCustomersTable extends Migration
             $table->decimal('latitude', 9,6)->nullable();
             $table->decimal('longitude', 9,6)->nullable();
             $table->string('note', 255)->nullable();
-            $table->foreign('created_by')->references('id')->on('users')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

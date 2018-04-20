@@ -191,7 +191,7 @@
                             </a>
                         </li>
                         <li class="bold">
-                            <a href="{{ route('customers.index') }}" class="waves-effect waves-cyan">
+                            <a href="{{ route('sales.index') }}" class="waves-effect waves-cyan">
                                 <i class="material-icons">shopping_cart</i>
                                 <span class="nav-text">Ventas</span>
                             </a>
@@ -203,7 +203,7 @@
                             </a>
                         </li>
                         <li class="bold">
-                            <a href="{{ route('customers.index') }}" class="waves-effect waves-cyan">
+                            <a href="{{ route('inflows.index') }}" class="waves-effect waves-cyan">
                                 <i class="material-icons">store</i>
                                 <span class="nav-text">Inventario</span>
                             </a>
@@ -221,7 +221,7 @@
                             </a>
                         </li>
                         <li class="bold">
-                            <a href="{{ route('customers.index') }}" class="waves-effect waves-cyan">
+                            <a href="{{ route('news.index') }}" class="waves-effect waves-cyan">
                                 <i class="material-icons">speaker_notes</i>
                                 <span class="nav-text">Noticias</span>
                             </a>

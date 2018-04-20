@@ -41,5 +41,17 @@ Route::prefix('admin')->group(function () {
         'show'
     ]]);
     Route::resource('customers', 'Admin\CustomerController');
+    Route::resource('sales', 'Admin\SaleController', ['except' => [
+        'show'
+    ]]);
+    Route::resource('accounts', 'Admin\AccountController', ['except' => [
+        'show'
+    ]]);
+    Route::resource('news', 'Admin\NewsController', ['except' => [
+        'show'
+    ]]);
+    Route::resource('inflows', 'Admin\InflowController', ['except' => [
+        'show'
+    ]]);
 });
 Route::get('/book/{id}', 'Admin\UserController@show')->name('book_profile');

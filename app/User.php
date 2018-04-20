@@ -31,11 +31,17 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     protected $dates = ['created_at','updated_at','deleted_at'];
-    /*public function user_roles(){
-        return $this->hasMany('App\Models\UserRole', 'user_id');
-    }*/
     public function roles(){
         //modelo - tabla - mi ID en esa tabla - la ID del otro modelo
         return $this->belongsToMany('App\Models\Role', 'user_roles', 'user_id', 'role_id');
+    }
+    public function news(){
+        return $this->hasMany('App\Models\News');
+    }
+    public function user_settings(){
+        return $this->hasMany('App\Models\UserSettings');
+    }
+    public function sales(){
+        return $this->hasMany('App\Models\Sale');
     }
 }
