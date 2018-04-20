@@ -12,6 +12,7 @@ class CustomersTableSeeder extends Seeder
     public function run()
     {
         DB::table('customers')->insert([
+            'created_by' => 1,
             'name' => 'Marín',
             'surname' => 'Loyola Riojas',
             'nit' => '64243418',
@@ -27,6 +28,7 @@ class CustomersTableSeeder extends Seeder
 
 
         DB::table('customers')->insert([
+            'created_by' => 1,
             'name' => 'Leonelo',
             'surname' => 'Puga Collazo',
             'nit' => '26348196',
@@ -40,6 +42,7 @@ class CustomersTableSeeder extends Seeder
             'updated_at' => '2017-08-23 23:18:21'
         ]);
         DB::table('customers')->insert([
+            'created_by' => 16,
             'name' => 'Goio',
             'surname' => 'Castellanos Arévalo',
             'nit' => '12530763',
@@ -53,6 +56,7 @@ class CustomersTableSeeder extends Seeder
             'updated_at' => '2017-08-23 23:18:21'
         ]);
         DB::table('customers')->insert([
+            'created_by' => 16,
             'name' => 'Farisa',
             'surname' => 'Carrión Guevara',
             'nit' => '56530694',
@@ -66,6 +70,7 @@ class CustomersTableSeeder extends Seeder
             'updated_at' => '2017-08-23 23:18:21'
         ]);
         DB::table('customers')->insert([
+            'created_by' => 16,
             'name' => 'Inaquí',
             'surname' => 'Pena Meza',
             'nit' => '40685517',
@@ -79,6 +84,7 @@ class CustomersTableSeeder extends Seeder
             'updated_at' => '2017-08-23 23:18:21'
         ]);
         DB::table('customers')->insert([
+            'created_by' => 16,
             'name' => 'Adeliz',
             'surname' => 'Carrera Abeyta',
             'nit' => '37554651',
@@ -91,6 +97,21 @@ class CustomersTableSeeder extends Seeder
             'created_at' => '2017-08-23 23:18:21',
             'updated_at' => '2017-08-23 23:18:21'
         ]);
+        DB::table('customers')->insert([
+            'created_by' => 16,
+            'name' => 'Carlos Ischia',
+            'surname' => 'Baute Mesa',
+            'nit' => '2664161016',
+            'email' => 'mygvs.mh@gmail.com',
+            'address' => 'Av. Armando Escobar Uria #999',
+            'phone' => '68055274',
+            'latitude' => -16.508648,
+            'longitude' => -68.099914,
+            'note' => "Ofrecer libros de: Ciencia Ficción",
+            'created_at' => '2018-04-18 23:18:21',
+            'updated_at' => '2018-04-18 23:18:21'
+        ]);
+
 
     }
 }

@@ -40,5 +40,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('book-type', 'Admin\BookTypeController', ['except' => [
         'show'
     ]]);
+    Route::resource('customers', 'Admin\CustomerController');
 });
 Route::get('/book/{id}', 'Admin\UserController@show')->name('book_profile');

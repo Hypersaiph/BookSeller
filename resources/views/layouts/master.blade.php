@@ -191,15 +191,39 @@
                             </a>
                         </li>
                         <li class="bold">
-                            <a href="{{ route('users.index') }}" class="waves-effect waves-cyan">
-                                <i class="material-icons">people</i>
-                                <span class="nav-text">Usuarios</span>
+                            <a href="{{ route('customers.index') }}" class="waves-effect waves-cyan">
+                                <i class="material-icons">shopping_cart</i>
+                                <span class="nav-text">Ventas</span>
                             </a>
                         </li>
                         <li class="bold">
                             <a href="{{ route('books.index') }}" class="waves-effect waves-cyan">
                                 <i class="material-icons">book</i>
                                 <span class="nav-text">Libros</span>
+                            </a>
+                        </li>
+                        <li class="bold">
+                            <a href="{{ route('customers.index') }}" class="waves-effect waves-cyan">
+                                <i class="material-icons">store</i>
+                                <span class="nav-text">Inventario</span>
+                            </a>
+                        </li>
+                        <li class="bold">
+                            <a href="{{ route('customers.index') }}" class="waves-effect waves-cyan">
+                                <i class="material-icons">nature_people</i>
+                                <span class="nav-text">Clientes</span>
+                            </a>
+                        </li>
+                        <li class="bold">
+                            <a href="{{ route('users.index') }}" class="waves-effect waves-cyan">
+                                <i class="material-icons">people</i>
+                                <span class="nav-text">Usuarios</span>
+                            </a>
+                        </li>
+                        <li class="bold">
+                            <a href="{{ route('customers.index') }}" class="waves-effect waves-cyan">
+                                <i class="material-icons">speaker_notes</i>
+                                <span class="nav-text">Noticias</span>
                             </a>
                         </li>
                         <li>

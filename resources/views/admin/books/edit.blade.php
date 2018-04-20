@@ -158,12 +158,13 @@
     <script type="text/javascript" src="{!! asset('js/ckeditor/config.js') !!}"></script>
     <script>
         $(document).ready(function() {
-            document.getElementById("description").value = "@if(old('description')){!!old('edition')!!}@else{!!$book->description!!}@endif";
             CKEDITOR.replace('editor');
             CKEDITOR.instances.editor.on('change', function() {
                 var txt = CKEDITOR.instances.editor.getData();
                 document.getElementById("description").value = txt;
             });
+            var txt = CKEDITOR.instances.editor.getData();
+            document.getElementById("description").value = txt;
             $('.authors').material_chip({
                 @php
                     $splt = array();
