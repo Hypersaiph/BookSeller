@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class CustomerController extends Controller
+class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,19 +14,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $items_per_page = 10;
-        $search = \Request::get('search');
-        $customers = Customer::where([
-            ['nit','like','%'.$search.'%'],
-            //['assigned_code', '<>', '']
-        ])
-            ->orWhere('id','like','%'.$search.'%')
-            ->orderBy('created_at', 'desc')
-            ->paginate($items_per_page);
-        $total = $customers->total();
-        $current_page = $customers->currentPage();
-        $items_per_page = $customers->perPage();
-        return view('admin.customers.list', compact('customers', 'total', 'current_page', 'items_per_page', 'search'));
+        //
     }
 
     /**
@@ -93,8 +80,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $book = Customer::find($id);
-        $book->delete();
-        return redirect()->route('customers.index');
+        //
     }
 }

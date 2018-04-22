@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\BookType;
 use App\Models\Genre;
 use App\Models\Language;
 use App\Models\ManyToMany\BookAuthor;
 use App\Models\ManyToMany\BookGenre;
+use App\Models\ManyToMany\BookImage;
+use App\Models\ManyToMany\BookPublisher;
 use Illuminate\Http\Request;
 use Webpatser\Uuid\Uuid;
 
@@ -28,6 +31,7 @@ class BookController extends Controller
             ['title','like','%'.$search.'%'],
             //['assigned_code', '<>', '']
         ])
+            ->orWhere('id','like','%'.$search.'%')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         $total = $books->total();
@@ -295,6 +299,24 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
+        //delete book_authors
+        $book_authors = BookAuthor::where('book_id',$id);
+        $book_authors->delete();
+        //delete book_genres
+        $book_genres = BookGenre::where('book_id',$id);
+        $book_genres->delete();
+        //delete book_images
+        $book_images = BookImage::where('book_id',$id);
+        $book_images->delete();
+        //delete book_types
+        $book_types = BookType::where('book_id',$id);
+        foreach ($book_types as $book_type){
+            //delete publishers
+            $publishers = BookPublisher::where('book_type_id',$book_type->id);
+            $publishers->delete();
+        }
+        $book_types->delete();
+        //delete book
         $book = Book::find($id);
         $book->delete();
         return redirect()->route('books.index');

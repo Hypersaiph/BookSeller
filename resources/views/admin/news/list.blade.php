@@ -65,7 +65,7 @@
                         <td>{{$data['message']}}</td>
                         <td>{{$data['delivery_date']}}</td>
                         <td>{{date('H:i', strtotime($data['delivery_time']))}}</td>
-                        <td>{{$data->user->name}} {{$data->user->surname}}</td>
+                        <td>@if($data->user !=null){{$data->user->name}} {{$data->user->surname}}@endif</td>
                         <td>
                             <a class="btn-floating btn-warning-cancel waves-effect waves-light red tooltipped"
                                data-position="bottom" data-delay="10" data-tooltip="Eliminar"

@@ -26,7 +26,7 @@ class InflowController extends Controller
             ->orWhere('isbn13','like','%'.$search.'%')
             ->orWhere('serial_cd','like','%'.$search.'%')
             ->join('inflows', 'book_types.id', '=', 'inflows.book_type_id')
-            ->select('book_types.*', DB::raw("SUM(inflows.quantity) - ifnull((select sum(o.quantity) from outflows o where o.book_type_id=book_types.id),0) as stock"))
+            ->select('book_types.*', DB::raw("SUM(inflows.quantity) - ifnull((select sum(o.quantity) from outflows o where o.book_type_id=book_types.id and o.deleted_at is null),0) as stock"))
             ->groupBy('book_types.id')
             ->orderBy('book_id', 'desc')
             ->orderBy('book_types.created_at', 'desc')

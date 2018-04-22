@@ -5,12 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\ManyToMany\UserRole;
+use App\Models\News;
 use App\Models\Role;
+use App\Models\UserSettings;
 use App\User;
 use Illuminate\Http\Request;
+use Unisharp\Setting\Setting;
 
 class UserController extends Controller
 {
+    protected $settings;
+    public function __construct(Setting $settings)
+    {
+        $this->settings = $settings;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -164,13 +172,39 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        //delete user_roles
+        $user_roles = UserRole::where('user_id',$id);
+        $user_roles->delete();
+        //delete user_settings
+        $user_settings = UserSettings::where('user_id',$id);
+        $user_settings->delete();
+        //delete user
         $user = User::find($id);
         $user->delete();
+
         return redirect()->route('users.index');
     }
     public function block(Request $request, $id){
         $user = User::find($id);
         $user->blocked = $request->get('blocked') == 'true'? 1 : 0;
         $user->save();
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function changeSystemSettings(Request $request){
+        $key = $request->get('key');
+        $value = $request->get('val');
+        $code = 404;
+        $msg = $key.' no existe.';
+        if($this->settings->has($key)){
+            $this->settings->set($key, $value);
+            $code = 200;
+            $msg = 'Ajuste registrado.';
+        }
+        return response()->json(['response' => $code, 'comments' => $msg]);
     }
 }

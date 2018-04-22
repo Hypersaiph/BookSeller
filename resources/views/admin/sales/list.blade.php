@@ -64,7 +64,7 @@
                     <tr>
                         <td>{{$items_per_page*($current_page - 1) + $index + 1}}</td>
                         <td>{{$data['code']}}</td>
-                        <td>{{$data->customer->name}} {{$data->customer->surname}}</td>
+                        <td>@if($data->customer != null){{$data->customer->name}} {{$data->customer->surname}}@endif</td>
                         <td>{{$data->sale_type->type}}</td>
                         <td>{{$data['months']}}</td>
                         <td>{{$data['anual_interest']}}</td>

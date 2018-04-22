@@ -15,14 +15,14 @@ Route::get('/', function () {
     //return view('user/login');
     return redirect('login');
 });
+Route::get('/user/blocked', function () {
+    return view('user.blocked');
+});
 Auth::routes();
-
-//Route::get('/home', 'HomeController@index')->name('home');
-//Route::group(['prefix' => '/n10/system', 'middleware' => ['auth','block']], function() {
-Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth','block']], function() {
+    /*Route::get('/', function () {
         return view('user.blocked');
-    });
+    });*/
     Route::resource('dashboard', 'Admin\DashboardController', ['except' => [
         'create','store','update','destroy','show','edit'
     ]]);
@@ -53,5 +53,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('inflows', 'Admin\InflowController', ['except' => [
         'create','store','show','edit','destroy'
     ]]);
+    Route::post('/settings', 'Admin\UserController@changeSystemSettings')->name('system_settings');
 });
 Route::get('/book/{id}', 'Admin\UserController@show')->name('book_profile');

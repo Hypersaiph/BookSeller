@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Account;
+use App\Models\Outflow;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 
@@ -21,6 +23,7 @@ class SaleController extends Controller
             ['code','like','%'.$search.'%'],
             //['assigned_code', '<>', '']
         ])
+            ->orWhere('id','like','%'.$search.'%')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         $total = $sales->total();
@@ -36,9 +39,15 @@ class SaleController extends Controller
      */
     public function destroy($id)
     {
+        //delete accounts
+        $accounts = Account::where('sale_id',$id);
+        $accounts->delete();
+        //delete aoutflows
+        $outflows = Outflow::where('sale_id',$id);
+        $outflows->delete();
+        //delete sale
         $sale = Sale::find($id);
         $sale->delete();
-        //delete: accounts, outflows
         return redirect()->route('sales.index');
     }
 }

@@ -13,7 +13,6 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
     <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>
         @section('title')
         @show
@@ -146,6 +145,11 @@
                         @endif
                     </li>
                     <li class="divider"></li>
+                    <li>
+                        <a href="#" class="grey-text text-darken-1">
+                            <i class="material-icons">settings</i> Configuraciones
+                        </a>
+                    </li>
                     <li class="divider"></li>
                     <li>
                         <a class="grey-text text-darken-1" href="{{ route('logout') }}"
@@ -269,298 +273,262 @@
                     <div class="row">
                         <div class="col s12 border-bottom-1 mt-5">
                             <ul class="tabs">
-                                <li class="tab col s6">
+                                <li class="tab col s4">
                                     <a href="#activity" class="active">
                                         <span class="material-icons">graphic_eq</span>
                                     </a>
                                 </li>
-                                <li class="tab col s6">
+                                <li class="tab col s4">
+                                    <a href="#chatapp">
+                                        <span class="material-icons">face</span>
+                                    </a>
+                                </li>
+                                <li class="tab col s4">
                                     <a href="#settings">
                                         <span class="material-icons">settings</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div id="activity" class="col s12">
-                            <h6 class="mt-5 mb-3 ml-3">ACTIVIDAD RECIENTE</h6>
-                            <div class="activity">
-                                @foreach($activities as $key=>$activity)
-                                <div class="recent-activity-list chat-out-list row mb-0">
-                                    <div class="col s3 mt-2 center-align recent-activity-list-icon">
-                                        <i class="material-icons white-text icon-bg-color
-                                        @switch($activity->table)
-                                            @case("sales")
-                                                    red
-                                                @break
-                                            @case("customers")
-                                                    blue
-                                                    @break
-                                            @case("accounts")
-                                                    orange
-                                                    @break
-                                            @case("inflows")
-                                                    green
-                                                    @break
-                                            @case("books")
-                                                    brown
-                                                    @break
-                                            @case("book_types")
-                                                    blue
-                                                    @break
-                                            @default
-                                        @endswitch
-                                             lighten-1">
-                                            @switch($activity->table)
-                                                @case("sales")
-                                                shopping_cart
-                                                @break
-                                                @case("customers")
-                                                nature_people
-                                                @break
-                                                @case("accounts")
-                                                account_balance_wallet
-                                                @break
-                                                @case("inflows")
-                                                store
-                                                @break
-                                                @case("books")
-                                                book
-                                                @break
-                                                @case("book_types")
-                                                extension
-                                                @break
-                                                @default
-                                            @endswitch
-                                        </i>
+                        <div id="settings" class="col s12">
+                            <h6 class="mt-5 mb-3 ml-3">GENERAL SETTINGS</h6>
+                            <ul class="collection border-none">
+                                <li class="collection-item border-none">
+                                    <div class="m-0">
+                                        <span class="font-weight-600">Notifications</span>
+                                        <div class="switch right">
+                                            <label>
+                                                <input checked type="checkbox">
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="col s9 recent-activity-list-text">
-                                        <a href="
-                                            @switch($activity->table)
-                                            @case("sales")
-                                        {{ route('sales.index', ['search'=>$activity->record_id]) }}
-                                                    @break
-                                            @case("customers")
-                                        {{ route('customers.index', ['search'=>$activity->record_id]) }}
-                                                    @break
-                                            @case("accounts")
-                                        {{ route('sales.index') }}
-                                                    @break
-                                            @case("inflows")
-                                        {{ route('inflows.index') }}
-                                                    @break
-                                            @case("books")
-                                        {{ route('books.index', ['search'=>$activity->record_id]) }}
-                                                    @break
-                                            @case("book_types")
-                                        {{ route('books.index') }}
-                                                    @break
-                                            @default
-                                        @endswitch" class="cyan-text medium-small">{{$activity_times_array[$key]}}</a>
-                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
-                                            <b>{{$activity_user_array[$key]}}</b> ha
-                                            @switch($activity->table)
-                                                @case("sales")
-                                                realizado una nueva venta.
-                                                @break
-                                                @case("customers")
-                                                registrado un nuevo cliente.
-                                                @break
-                                                @case("accounts")
-                                                abierto una nueva cuenta.
-                                                @break
-                                                @case("inflows")
-                                                agregado nuevo stock.
-                                                @break
-                                                @case("books")
-                                                registrado un nuevo libro.
-                                                @break
-                                                @case("book_types")
-                                                registrado una presentacion de libro nueva.
-                                                @break
-                                                @default
-                                            @endswitch
-                                        </p>
+                                    <p>Use checkboxes when looking for yes or no answers.</p>
+                                </li>
+                                <li class="collection-item border-none">
+                                    <div class="m-0">
+                                        <span class="font-weight-600">Show recent activity</span>
+                                        <div class="switch right">
+                                            <label>
+                                                <input checked type="checkbox">
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                @endforeach
+                                    <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                                </li>
+                                <li class="collection-item border-none">
+                                    <div class="m-0">
+                                        <span class="font-weight-600">Notifications</span>
+                                        <div class="switch right">
+                                            <label>
+                                                <input type="checkbox">
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <p>Use checkboxes when looking for yes or no answers.</p>
+                                </li>
+                                <li class="collection-item border-none">
+                                    <div class="m-0">
+                                        <span class="font-weight-600">Show recent activity</span>
+                                        <div class="switch right">
+                                            <label>
+                                                <input type="checkbox">
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                                </li>
+                                <li class="collection-item border-none">
+                                    <div class="m-0">
+                                        <span class="font-weight-600">Show your emails</span>
+                                        <div class="switch right">
+                                            <label>
+                                                <input type="checkbox">
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <p>Use checkboxes when looking for yes or no answers.</p>
+                                </li>
+                                <li class="collection-item border-none">
+                                    <div class="m-0">
+                                        <span class="font-weight-600">Show Task statistics</span>
+                                        <div class="switch right">
+                                            <label>
+                                                <input type="checkbox">
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="chatapp" class="col s12">
+                            <div class="collection border-none">
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-1.png')}}" alt="" class="circle cyan">
+                                    <span class="line-height-0">Elizabeth Elliott </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">5.00 AM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Thank you </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-2.png')}}" alt="" class="circle deep-orange accent-2">
+                                    <span class="line-height-0">Mary Adams </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">4.14 AM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Hello Boo </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-3.png')}}" alt="" class="circle teal accent-4">
+                                    <span class="line-height-0">Caleb Richards </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">9.00 PM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Keny ! </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-4.png')}}" alt="" class="circle cyan">
+                                    <span class="line-height-0">June Lane </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">4.14 AM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Ohh God </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-5.png')}}" alt="" class="circle red accent-2">
+                                    <span class="line-height-0">Edward Fletcher </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">5.15 PM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Love you </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-6.png')}}" alt="" class="circle deep-orange accent-2">
+                                    <span class="line-height-0">Crystal Bates </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">8.00 AM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Can we </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-7.png')}}" alt="" class="circle cyan">
+                                    <span class="line-height-0">Nathan Watts </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">9.53 PM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Great! </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-8.png')}}" alt="" class="circle red accent-2">
+                                    <span class="line-height-0">Willard Wood </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">4.20 AM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Do it </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-9.png')}}" alt="" class="circle teal accent-4">
+                                    <span class="line-height-0">Ronnie Ellis </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">5.30 PM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Got that </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-1.png')}}" alt="" class="circle cyan">
+                                    <span class="line-height-0">Gwendolyn Wood </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">4.34 AM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Like you </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-2.png')}}" alt="" class="circle red accent-2">
+                                    <span class="line-height-0">Daniel Russell </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">12.00 AM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Thank you </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-3.png')}}" alt="" class="circle teal accent-4">
+                                    <span class="line-height-0">Sarah Graves </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">11.14 PM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Okay you </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-4.png')}}" alt="" class="circle red accent-2">
+                                    <span class="line-height-0">Andrew Hoffman </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">7.30 PM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Can do </p>
+                                </a>
+                                <a href="#!" class="collection-item avatar border-none">
+                                    <img src="{{URL::asset('images/avatar/avatar-5.png')}}" alt="" class="circle cyan">
+                                    <span class="line-height-0">Camila Lynch </span>
+                                    <span class="medium-small right blue-grey-text text-lighten-3">2.00 PM</span>
+                                    <p class="medium-small blue-grey-text text-lighten-3">Leave it </p>
+                                </a>
                             </div>
                         </div>
-                        <div id="settings" class="col s12">
-                            <h6 class="mt-5 mb-3 ml-3"><b>AJUSTES DEL SISTEMA</b></h6>
-                            <h6 class="mt-5 mb-3 ml-3">Ventas</h6>
-                            <div class="divider"></div>
-                            <ul class="collection border-none">
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Número de días en el año</span>
-                                        <div class="input-field col s12 m12 l12">
-                                            <input placeholder="modificar..." type="number" min="0" step="1" onchange="setSalesSettingsInt('days_in_year', this.value)" value="{{$days_in_year}}">
-                                        </div>
+                        <div id="activity" class="col s12">
+                            <h6 class="mt-5 mb-3 ml-3">RECENT ACTIVITY</h6>
+                            <div class="activity">
+                                <div class="col s3 mt-2 center-align recent-activity-list-icon">
+                                    <i class="material-icons white-text icon-bg-color deep-purple lighten-2">add_shopping_cart</i>
+                                </div>
+                                <div class="col s9 recent-activity-list-text">
+                                    <a href="#" class="deep-purple-text medium-small">just now</a>
+                                    <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Jim Doe Purchased new equipments for zonal office.</p>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row mb-0">
+                                    <div class="col s3 mt-2 center-align recent-activity-list-icon">
+                                        <i class="material-icons white-text icon-bg-color cyan lighten-2">airplanemode_active</i>
                                     </div>
-                                    <p>Modificar para asignar el número de días anuales. Este campo es utilizado para el calculo de intereses.</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Número de días para aplicar interés por mora</span>
-                                        <div class="input-field col s12 m12 l12">
-                                            <input placeholder="modificar..." type="number" min="0" step="1" onchange="setSalesSettingsInt('days_before_penalty', this.value)" value="{{$days_before_penalty}}">
-                                        </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#" class="cyan-text medium-small">Yesterday</a>
+                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Your Next flight for USA will be on 15th August 2015.</p>
                                     </div>
-                                    <p>Modificar para asignar el número de días naturales, antes de aplicar intereses por mora (ventas a crédito).</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Porcentaje de interés por mora (%)</span>
-                                        <div class="input-field col s12 m12 l12">
-                                            <input placeholder="modificar..." type="number" min="0" step="1" onchange="setSalesSettingsDouble('penalty_percentage', this.value)" value="{{$penalty_percentage}}">
-                                        </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row mb-0">
+                                    <div class="col s3 mt-2 center-align recent-activity-list-icon medium-small">
+                                        <i class="material-icons white-text icon-bg-color green lighten-2">settings_voice</i>
                                     </div>
-                                    <p>Modificar para asignar el porcentaje de interé, se aplica cuando se vence la fecha límite de pago de cuotas. Utilizar (.) para separar los decimales.</p>
-                                </li>
-                            </ul>
-                            <h6 class="mt-5 mb-3 ml-3">Envío de Notificaciones</h6>
-                            <div class="divider"></div>
-                            <ul class="collection border-none">
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Libros</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('book_notification',this.checked)" type="checkbox"
-                                                       @if($book_notification==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#" class="green-text medium-small">5 Days Ago</a>
+                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Natalya Parker Send you a voice mail for next conference.</p>
                                     </div>
-                                    <p>Activar para enviar Notificaciones Push cuando se registran nuevos libros.</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Presentaciones de Libro</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('book_type_notification',this.checked)" type="checkbox"
-                                                       @if($book_type_notification==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row mb-0">
+                                    <div class="col s3 mt-2 center-align recent-activity-list-icon">
+                                        <i class="material-icons white-text icon-bg-color amber lighten-2">store</i>
                                     </div>
-                                    <p>Activar para enviar Notificaciones Push cuando se registran nuevas Presentaciones de libros (Tapa Dura, Tapa Suave, Audiolibro).</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Inventario</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('inflows_notification',this.checked)" type="checkbox"
-                                                       @if($inflows_notification==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#" class="amber-text medium-small">1 Week Ago</a>
+                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Jessy Jay open a new store at S.G Road.</p>
                                     </div>
-                                    <p>Activar para enviar Notificaciones Push cuando se registra nuevo stock en el inventario.</p>
-                                </li>
-                            </ul>
-                            <h6 class="mt-5 mb-3 ml-3">Actividad Reciente</h6>
-                            <div class="divider"></div>
-                            <ul class="collection border-none">
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Ventas</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('sales_activity',this.checked)" type="checkbox"
-                                                        @if($sales_activity==true)
-                                                            checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                </div>
+                                <div class="recent-activity-list row">
+                                    <div class="col s3 mt-2 center-align recent-activity-list-icon">
+                                        <i class="material-icons white-text icon-bg-color deep-orange lighten-2">settings_voice</i>
                                     </div>
-                                    <p>Activar para mostrar los nuevos registros de ventas.</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Clientes</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('customers_activity',this.checked)" type="checkbox"
-                                                       @if($customers_activity==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#" class="deep-orange-text medium-small">2 Week Ago</a>
+                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">voice mail for conference.</p>
                                     </div>
-                                    <p>Activar para mostrar los nuevos registros de clientes.</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Cuentas</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('accounts_activity',this.checked)" type="checkbox"
-                                                       @if($accounts_activity==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row mb-0">
+                                    <div class="col s3 mt-2 center-align recent-activity-list-icon medium-small">
+                                        <i class="material-icons white-text icon-bg-color brown lighten-2">settings_voice</i>
                                     </div>
-                                    <p>Activar para mostrar los nuevos registros de cuentas de ventas a crédito.</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Inventario</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('inflows_activity',this.checked)" type="checkbox"
-                                                       @if($inflows_activity==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#" class="brown-text medium-small">1 Month Ago</a>
+                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Natalya Parker Send you a voice mail for next conference.</p>
                                     </div>
-                                    <p>Activar para mostrar los nuevos registros del inventario.</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Libros</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('books_activity',this.checked)" type="checkbox"
-                                                       @if($books_activity==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row mb-0">
+                                    <div class="col s3 mt-2 center-align recent-activity-list-icon">
+                                        <i class="material-icons white-text icon-bg-color deep-purple lighten-2">store</i>
                                     </div>
-                                    <p>Activar para mostrar los nuevos registros de libros.</p>
-                                </li>
-                                <li class="collection-item border-none">
-                                    <div class="m-0">
-                                        <span class="font-weight-600">Presentaciones de Libro</span>
-                                        <div class="switch right">
-                                            <label>
-                                                <input onclick="setSetting('book_types_activity',this.checked)" type="checkbox"
-                                                       @if($book_types_activity==true)
-                                                       checked
-                                                        @endif>
-                                                <span class="lever"></span>
-                                            </label>
-                                        </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#" class="deep-purple-text medium-small">3 Month Ago</a>
+                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">Jessy Jay open a new store at S.G Road.</p>
                                     </div>
-                                    <p>Activar para mostrar los nuevos registros Presentaciones de libros (Tapa Dura, Tapa Suave, Audiolibro).</p>
-                                </li>
-                            </ul>
+                                </div>
+                                <div class="recent-activity-list row">
+                                    <div class="col s3 mt-2 center-align recent-activity-list-icon">
+                                        <i class="material-icons white-text icon-bg-color grey lighten-2">settings_voice</i>
+                                    </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#" class="grey-text medium-small">1 Year Ago</a>
+                                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">voice mail for conference.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -594,33 +562,6 @@
 <!-- ================================================
       Scripts
 ================================================ -->
-<script>
-    function setSetting(key, val){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var data = {
-            "_token": '{{ csrf_token() }}',
-            "key" : key,
-            "val" : val
-        };
-        $.ajax({
-            url: '{{ route('system_settings') }}',
-            dataType: 'text',
-            type: 'post',
-            data: data,
-            success: function( data, textStatus, jQxhr ){
-                var d = JSON.parse(data);
-                Materialize.toast(d.comments, 2000, 'rounded');
-            },
-            error: function( jqXhr, textStatus, errorThrown ){
-                console.log( errorThrown );
-            }
-        });
-    }
-</script>
 <!-- jQuery Library -->
 <script type="text/javascript" src="{!! asset('vendors/jquery-3.2.1.min.js') !!}"></script>
 <!--materialize js-->

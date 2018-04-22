@@ -257,6 +257,10 @@ class BookTypeController extends Controller
     {
         $book_id = \Request::get('book_id');
         if($book_id){
+            //delete publishers
+            $publishers = BookPublisher::where('book_type_id',$id);
+            $publishers->delete();
+            //delete book_type
             $book_type = BookType::find($id);
             $book_type->delete();
             return redirect()->route('book-type.index', array('book_id' => $book_id));

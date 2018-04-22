@@ -9,3 +9,41 @@ NOTE:
 ------
 PLACE HERE YOUR OWN JS CODES AND IF NEEDED.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR CUSTOM SCRIPT IT'S BETTER LIKE THIS. */
+$(document).ready(function() {
+    $('.timepicker').pickatime({
+        default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+        fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+        twelvehour: false, // Use AM/PM or 24-hour format
+        donetext: 'OK', // text for done-button
+        cleartext: 'Ninguno', // text for clear-button
+        canceltext: 'Cancelar', // Text for cancel-button,
+        container: undefined, // ex. 'body' will append picker to body
+        autoclose: false, // automatic close timepicker
+        ampmclickable: true, // make AM PM clickable
+        aftershow: function(){} //Function for after opening timepicker
+    });
+});
+function setSalesSettingsInt(key, val){
+    if(!Number.isInteger(Number(val))){
+        Materialize.toast("Debe ser un valor entero.", 2000, 'rounded');
+    }else{
+        if(val <= 0){
+            Materialize.toast("Debe ser un valor positivo.", 2000, 'rounded');
+        }else{
+            var new_val = parseInt(val);
+            setSetting(key,new_val);
+        }
+    }
+}
+function setSalesSettingsDouble(key, val){
+    if (isNaN(val)) {
+        Materialize.toast("Debe ser un valor numérico.", 2000, 'rounded');
+    }else{
+        if(val <= 0){
+            Materialize.toast("Debe ser un valor positivo.", 2000, 'rounded');
+        }else{
+            var new_val = parseFloat(val);
+            setSetting(key,new_val);
+        }
+    }
+}
