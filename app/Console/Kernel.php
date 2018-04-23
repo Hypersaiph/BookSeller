@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Models\Account;
+use App\Models\Notification;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $penalty_schedule = DB::table('settings')->where('key','penalty_schedule')->first();
+
+        //cuentas retrasadas
         $schedule->call(function () {
             $db_days_in_year = DB::table('settings')->where('key','days_in_year')->first();
             $days_in_year = intval($db_days_in_year->value);
@@ -44,6 +47,25 @@ class Kernel extends ConsoleKernel
                     ->update(['penalty' => $interest]);
             }
         })->dailyAt($penalty_schedule->value.'');
+        //})->everyMinute();
+        //notificar a todos sobre el pago de cuotas
+        $schedule->call(function () {
+            $accounts = DB::table('accounts')->where('payment_date','=',date('Y-m-d'))->get();
+            foreach ($accounts as $account){
+                $customer = DB::table('customers')
+                    ->join('sales', 'customers.id', '=', 'sales.customer_id')
+                    ->where('sales.id',$account->sale_id)
+                    ->first();
+                $user = DB::table('users')
+                    ->join('sales', 'users.id', '=', 'sales.user_id')
+                    ->where('sales.id',$account->sale_id)
+                    ->first();
+                $token = $user->name;
+                if($token != null && sizeof($token)>10){
+                    (new Notification())->notifyPaymentDate($token,"Hoy toca cobrar una cuota!","Cliente: ".$customer->name.' '.$customer->surname.', Monto: '.(floatval($account->amount)+floatval($account->penalty)).' Bs.');
+                }
+            }
+        })->dailyAt('7:00');
         //})->everyMinute();
     }
 

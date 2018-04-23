@@ -6,10 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InflowRequest;
 use App\Models\BookType;
 use App\Models\Inflow;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
+use Unisharp\Setting\Setting;
 
 class InflowController extends Controller
 {
+    protected $settings;
+    public function __construct(Setting $settings)
+    {
+        // Dependencies automatically resolved by service container...
+        $this->settings = $settings;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +33,7 @@ class InflowController extends Controller
         $book_types = BookType::where('isbn10','like','%'.$search.'%')
             ->orWhere('isbn13','like','%'.$search.'%')
             ->orWhere('serial_cd','like','%'.$search.'%')
-            ->join('inflows', 'book_types.id', '=', 'inflows.book_type_id')
+            ->leftJoin('inflows', 'book_types.id', '=', 'inflows.book_type_id')
             ->select('book_types.*', DB::raw("SUM(inflows.quantity) - ifnull((select sum(o.quantity) from outflows o where o.book_type_id=book_types.id and o.deleted_at is null),0) as stock"))
             ->groupBy('book_types.id')
             ->orderBy('book_id', 'desc')
@@ -51,6 +59,11 @@ class InflowController extends Controller
             'quantity' => $request->get('quantity'),
         ]);
         $inflow->save();
+        //enviar notificaciones
+        if($this->settings->get('inflows_notification',null) == "true") {
+            $book_type = BookType::find($id);
+            (new Notification())->notify($book_type->book->title, "Nuevo stock en: ".$book_type->type->type, "inflows");
+        }
         return redirect()->route('inflows.index');
     }
 }

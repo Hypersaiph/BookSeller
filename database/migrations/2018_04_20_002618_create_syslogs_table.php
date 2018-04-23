@@ -16,7 +16,7 @@ class CreateSyslogsTable extends Migration
         Schema::create('syslogs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('record_id')->unsigned();
+            $table->integer('record_id')->unsigned()->nullable();
             $table->string('event', 10)->nullable();
             $table->string('table', 155)->nullable();
             $table->string('description', 255)->nullable();

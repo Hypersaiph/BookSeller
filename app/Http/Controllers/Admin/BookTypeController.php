@@ -7,12 +7,20 @@ use App\Http\Requests\BookTypeRequest;
 use App\Models\Book;
 use App\Models\BookType;
 use App\Models\ManyToMany\BookPublisher;
+use App\Models\Notification;
 use App\Models\Publisher;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Unisharp\Setting\Setting;
 
 class BookTypeController extends Controller
 {
+    protected $settings;
+    public function __construct(Setting $settings)
+    {
+        // Dependencies automatically resolved by service container...
+        $this->settings = $settings;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -113,6 +121,11 @@ class BookTypeController extends Controller
                 if ($trimmed_publisher_name != "") {
                     $this->createBookPublisherOrPublisher($trimmed_publisher_name, $book_type->id);
                 }
+            }
+            //enviar notificaciones
+            if($this->settings->get('book_type_notification',null) == "true") {
+                $book = Book::find($book_id);
+                (new Notification())->notify("".$book->title, "Disponible en: ".$book_type->type->type, "book_types");
             }
             return redirect()->route('book-type.index', array('book_id'=>$book_id));
         }else{

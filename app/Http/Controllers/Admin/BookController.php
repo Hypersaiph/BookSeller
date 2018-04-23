@@ -13,11 +13,21 @@ use App\Models\ManyToMany\BookAuthor;
 use App\Models\ManyToMany\BookGenre;
 use App\Models\ManyToMany\BookImage;
 use App\Models\ManyToMany\BookPublisher;
+use App\Models\Notification;
+use App\Models\Syslog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Unisharp\Setting\Setting;
 use Webpatser\Uuid\Uuid;
 
 class BookController extends Controller
 {
+    protected $settings;
+    public function __construct(Setting $settings)
+    {
+        // Dependencies automatically resolved by service container...
+        $this->settings = $settings;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +35,8 @@ class BookController extends Controller
      */
     public function index()
     {
+        $this->sendNotification();
+        //(new Syslog())->log(Auth::user()->id,'22','create','books',1);
         $items_per_page = 10;
         $search = \Request::get('search');
         $books = Book::where([
@@ -74,7 +86,7 @@ class BookController extends Controller
             'publication_date' => new \DateTime($request->get('publication_date')),
             'cover_image' => $image_name,
         ]);
-        $book->save();
+        $book->save();(new Syslog())->log(Auth::user()->id,$book->id,'create','books',1);
         //authors and book_authors
         $authors = $request->get('authors')[0];
         $authors_array = explode(',', $authors);
@@ -86,18 +98,18 @@ class BookController extends Controller
                     $author = new Author([
                         'name' => $trimmed_author_name,
                     ]);
-                    $author->save();
+                    $author->save();(new Syslog())->log(Auth::user()->id,$author->id,'create','authors',1);
                     $book_author = new BookAuthor([
                         'book_id' => $book->id,
                         'author_id' => $author->id,
                     ]);
-                    $book_author->save();
+                    $book_author->save();(new Syslog())->log(Auth::user()->id,$book_author->id,'create','book_authors',1);
                 }else{
                     $book_author = new BookAuthor([
                         'book_id' => $book->id,
                         'author_id' => $author->id,
                     ]);
-                    $book_author->save();
+                    $book_author->save();(new Syslog())->log(Auth::user()->id,$book_author->id,'create','book_authors',1);
                 }
             }
         }
@@ -108,7 +120,11 @@ class BookController extends Controller
                 'book_id' => $book->id,
                 'genre_id' => $genre,
             ]);
-            $book_genre->save();
+            $book_genre->save();(new Syslog())->log(Auth::user()->id,$book_genre->id,'create','book_genres',1);
+        }
+        //enviar notificaciones
+        if($this->settings->get('book_notification',null) == "true") {
+            (new Notification())->notify("Se agregó un nuevo libro al sistema", "".$book->title, "books");
         }
         return redirect()->route('books.index');
     }
@@ -173,7 +189,7 @@ class BookController extends Controller
         if($request->cover_image != null){
             $book->cover_image = $image_name;
         }
-        $book->save();
+        $book->save();(new Syslog())->log(Auth::user()->id,$book->id,'update','books',1);
         //authors and book_authors
         $authors = $request->get('authors')[0];
         $input_authors_array = explode(',', $authors);
@@ -193,7 +209,7 @@ class BookController extends Controller
                     $book_author = BookAuthor::where([
                         ['book_id', '=', $book->id],
                         ['author_id', '=', $author->id],
-                    ])->first();
+                    ])->first();(new Syslog())->log(Auth::user()->id,$book_author->id,'delete','book_authors',1);
                     $book_author->delete();
                 }
             }
@@ -227,7 +243,7 @@ class BookController extends Controller
                     $book_author = BookAuthor::where([
                         ['book_id', '=', $book->id],
                         ['author_id', '=', $found_author->id],
-                    ])->first();
+                    ])->first();(new Syslog())->log(Auth::user()->id,$book_author->id,'delete','book_authors',1);
                     $book_author->delete();
                 }
             }
@@ -242,7 +258,7 @@ class BookController extends Controller
                     $book_genre = BookGenre::where([
                         ['book_id', '=', $book->id],
                         ['genre_id', '=', $genre->id],
-                    ])->first();
+                    ])->first();(new Syslog())->log(Auth::user()->id,$book_genre->id,'delete','book_genres',1);
                     $book_genre->delete();
                 }
             }
@@ -258,7 +274,7 @@ class BookController extends Controller
                         'book_id' => $book->id,
                         'genre_id' => $input_genre,
                     ]);
-                    $new_book_genre->save();
+                    $new_book_genre->save();(new Syslog())->log(Auth::user()->id,$book_genre->id,'create','book_genres',1);
                 }
             }
         }else{//add
@@ -273,7 +289,7 @@ class BookController extends Controller
                         'book_id' => $book->id,
                         'genre_id' => $input_genre,
                     ]);
-                    $new_book_genre->save();
+                    $new_book_genre->save();(new Syslog())->log(Auth::user()->id,$new_book_genre->id,'create','book_genres',1);
                 }
             }
             //inverse delete
@@ -283,7 +299,7 @@ class BookController extends Controller
                     $book_genre = BookGenre::where([
                         ['book_id', '=', $book->id],
                         ['genre_id', '=', $book_genre],
-                    ])->first();
+                    ])->first();(new Syslog())->log(Auth::user()->id,$book_genre->id,'delete','book_genres',1);
                     $book_genre->delete();
                 }
             }
@@ -300,24 +316,37 @@ class BookController extends Controller
     public function destroy($id)
     {
         //delete book_authors
-        $book_authors = BookAuthor::where('book_id',$id);
-        $book_authors->delete();
+        $book_authors = BookAuthor::where('book_id',$id)->get();
+        foreach ($book_authors as $data){
+            (new Syslog())->log(Auth::user()->id,$data->id,'delete','book_authors',1);
+            $data->delete();
+        }
         //delete book_genres
-        $book_genres = BookGenre::where('book_id',$id);
-        $book_genres->delete();
+        $book_genres = BookGenre::where('book_id',$id)->get();
+        foreach ($book_genres as $data){
+            (new Syslog())->log(Auth::user()->id,$data->id,'delete','book_genres',1);
+            $data->delete();
+        }
         //delete book_images
-        $book_images = BookImage::where('book_id',$id);
-        $book_images->delete();
+        $book_images = BookImage::where('book_id',$id)->get();
+        foreach ($book_images as $data){
+            (new Syslog())->log(Auth::user()->id,$data->id,'delete','book_images',1);
+            $data->delete();
+        }
         //delete book_types
-        $book_types = BookType::where('book_id',$id);
+        $book_types = BookType::where('book_id',$id)->get();
         foreach ($book_types as $book_type){
             //delete publishers
-            $publishers = BookPublisher::where('book_type_id',$book_type->id);
-            $publishers->delete();
+            $publishers = BookPublisher::where('book_type_id',$book_type->id)->get();
+            foreach ($publishers as $data){
+                $data->delete();
+                (new Syslog())->log(Auth::user()->id,$data->id,'delete','book_publishers',1);
+            }
+            $book_type->delete();
+            (new Syslog())->log(Auth::user()->id,$book_type->id,'delete','book_types',1);
         }
-        $book_types->delete();
         //delete book
-        $book = Book::find($id);
+        $book = Book::find($id);(new Syslog())->log(Auth::user()->id,$book->id,'delete','books',1);
         $book->delete();
         return redirect()->route('books.index');
     }
@@ -329,18 +358,21 @@ class BookController extends Controller
             $new_author = new Author([
                 'name' => $author_name,
             ]);
-            $new_author->save();
+            $new_author->save();(new Syslog())->log(Auth::user()->id,$new_author->id,'create','authors',1);
             $book_author = new BookAuthor([
                 'book_id' => $book_id,
                 'author_id' => $new_author->id,
             ]);
-            $book_author->save();
+            $book_author->save();(new Syslog())->log(Auth::user()->id,$book_author->id,'create','book_authors',1);
         }else{
             $book_author = new BookAuthor([
                 'book_id' => $book_id,
                 'author_id' => $found_author->id,
             ]);
-            $book_author->save();
+            $book_author->save();(new Syslog())->log(Auth::user()->id,$book_author->id,'create','book_authors',1);
         }
+    }
+    public function sendNotification(){
+
     }
 }

@@ -26,4 +26,7 @@ Route::group(['prefix' => '/v1', 'middleware' => 'auth:api'], function() {
     Route::resource('customers', 'Api\CustomerController', ['only' => [
         'index', 'store', 'show', 'update'
     ]]);
+    Route::resource('sales', 'Api\CustomerController', ['only' => [
+        'index', 'store', 'show', 'update'
+    ]]);
 });
