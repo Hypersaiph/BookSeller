@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsRequest;
 use App\Models\News;
+use App\Models\Notification;
 use DateInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,23 +52,14 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $id = Auth::user()->id;
-        $todays_date = new \DateTime();
-        $date = $todays_date->format('d-m-Y');
-        $delivery = new \DateTime($request->get('delivery_date').' '.$request->get('delivery_time'));
-        if($date == $request->get('delivery_date') && $delivery <= $todays_date){
-            $time = $todays_date->add(new DateInterval('PT4M'));;
-            $time = $time->format('H:i');
-        }else{
-            $time = $request->get('delivery_time');
-        }
         $news = new News([
             'user_id' => $id,
+            'title' => $request->get('title'),
             'message' => $request->get('message'),
-            'delivery_date' => new \DateTime($request->get('delivery_date')),
-            'delivery_time' => $time,
         ]);
         $news->save();
         //use firebase API
+        (new Notification())->notify($request->get('title'), $request->get('message'), "news");
         return redirect()->route('news.index');
     }
 

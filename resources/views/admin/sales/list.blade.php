@@ -66,8 +66,8 @@
                         <td>{{$data['code']}}</td>
                         <td>@if($data->customer != null){{$data->customer->name}} {{$data->customer->surname}}@endif</td>
                         <td>{{$data->sale_type->type}}</td>
-                        <td>{{$data['months']}}</td>
-                        <td>{{$data['anual_interest']}}</td>
+                        <td>@if($data['months']!=0){{$data['months']}}@endif</td>
+                        <td>@if($data['anual_interest']!=0){{$data['anual_interest']}}@endif</td>
                         <td>
                             <a class="btn-floating waves-effect waves-light gradient-45deg-green-teal gradient-shadow tooltipped"
                                data-position="bottom" data-delay="10" data-tooltip="Cuentas"

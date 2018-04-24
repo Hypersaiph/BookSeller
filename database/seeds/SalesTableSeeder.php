@@ -17,10 +17,10 @@ class SalesTableSeeder extends Seeder
             'sale_type_id' => 1,
             'code' => '180000001',
             'is_billed' => false,
-            'months' => null,
-            'anual_interest' => null,
-            'created_at' => '2018-04-18 23:18:21',
-            'updated_at' => '2018-04-18 23:18:21'
+            'months' => 0,
+            'anual_interest' => 0.0,
+            'created_at' => '2018-04-17 23:18:21',
+            'updated_at' => '2018-04-17 23:18:21'
         ]);
         DB::table('sales')->insert([
             'customer_id' => 7,

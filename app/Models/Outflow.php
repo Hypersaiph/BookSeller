@@ -16,6 +16,6 @@ class Outflow extends Model
         return $this->belongsTo('App\Models\Sale','sale_id');
     }
     public function book_type(){
-        return $this->belongsTo('App\Models\Sale','book_type_id');
+        return $this->belongsTo('App\Models\BookType','book_type_id');
     }
 }

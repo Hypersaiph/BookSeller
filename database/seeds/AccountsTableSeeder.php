@@ -19,8 +19,8 @@ class AccountsTableSeeder extends Seeder
             'payment_date' => '2018-04-18',
             'limit_payment_date' => null,
             'is_active' => false,
-            'created_at' => '2018-04-18 23:18:21',
-            'updated_at' => '2018-04-18 23:18:21'
+            'created_at' => '2018-04-17 23:18:21',
+            'updated_at' => '2018-04-17 23:18:21'
         ]);
         DB::table('accounts')->insert([
             'sale_id' => 2,

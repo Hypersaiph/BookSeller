@@ -13,9 +13,8 @@ class NewsTableSeeder extends Seeder
     {
         DB::table('news')->insert([
             'user_id' => 16,
+            'title' => 'Hola a Todos',
             'message' => 'Hola a Todos',
-            'delivery_date' => '2018-04-18',
-            'delivery_time' => '15:40',
             'created_at' => '2018-04-18 23:18:21',
             'updated_at' => '2018-04-18 23:18:21'
         ]);

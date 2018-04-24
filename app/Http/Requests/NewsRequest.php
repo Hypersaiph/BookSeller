@@ -34,9 +34,8 @@ class NewsRequest extends FormRequest
             $date_rule = $date_rule = $date == $request->get('delivery_date')?'after_or_equal:today':'after_or_equal:tomorrow';
         }
         return [
+            'title' => 'required|string|min:10|max:255',
             'message' => 'required|string|min:10|max:255',
-            'delivery_date' => 'required|date|date_format:d-m-Y|'.$date_rule,
-            'delivery_time' => 'required|date_format:H:i',
         ];
     }
 }

@@ -32,9 +32,21 @@
                             @csrf
                             <div class="row">
                                 <div class="input-field col s12 m12 l12">
+                                    <i class="material-icons prefix">title</i>
+                                    <textarea name="title" id="title" data-length="255" class="materialize-textarea">{{old('title')}}</textarea>
+                                    <label for="title">Título</label>
+                                    @if ($errors->has('title'))
+                                        <span class="red-text text-darken-2">
+                                            <strong>{{ $errors->first('title') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
                                     <i class="material-icons prefix">email</i>
                                     <textarea name="message" id="message" data-length="255" class="materialize-textarea">{{old('message')}}</textarea>
-                                    <label for="message">Message</label>
+                                    <label for="message">Mensaje</label>
                                     @if ($errors->has('message'))
                                         <span class="red-text text-darken-2">
                                             <strong>{{ $errors->first('message') }}</strong>
@@ -43,28 +55,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div id="date-picker" class="section col s12 m6 l6">
-                                    <label for="delivery_date">Fecha de Entrega</label>
-                                    <input id="delivery_date" name="delivery_date" type="text" class="datepicker" required value="{{old('delivery_date')}}">
-                                    @if ($errors->has('delivery_date'))
-                                        <span class="red-text text-darken-2">
-                                            <strong>{{ $errors->first('delivery_date') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div id="time-picker" class="section col s12 m6 l6">
-                                    <label for="delivery_time">Hora de Entrega</label>
-                                    <input id="delivery_time" name="delivery_time" type="text" class="timepicker" value="{{old('delivery_time')}}" >
-                                    @if ($errors->has('delivery_time'))
-                                        <span class="red-text text-darken-2">
-                                            <strong>{{ $errors->first('delivery_time') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="input-field col s12">
-                                    <button class="btn waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow right" type="submit">Registrar
+                                    <button class="btn waves-effect waves-light gradient-45deg-light-blue-cyan gradient-shadow right" type="submit">Enviar
                                         <i class="mdi-content-send right"></i>
                                     </button>
                                 </div>

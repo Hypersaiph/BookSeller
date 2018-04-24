@@ -35,11 +35,20 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $user_id = $request->user()->id;
-        $customers = Customer::where([
-            ['created_by','=', $user_id],
-        ])
-            ->orderBy('created_at', 'desc')
-            ->get();
+
+        $nit = $request->query('nit');
+        if($nit){
+            $customers = Customer::where('nit','like','%'.$nit.'%')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }else{
+            $customers = Customer::where([
+                ['created_by','=', $user_id],
+            ])
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+        //dump($customers);
         $customers = new Collection($customers, $this->transformer); // Create a resource collection transformer
         $customers = $this->fractal->createData($customers); // Transform data
         return $customers->toArray();

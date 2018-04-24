@@ -51,9 +51,9 @@
                 <thead>
                 <tr>
                     <th >#</th>
+                    <th>Título</th>
                     <th>Mensaje</th>
-                    <th>Fecha de Entrega</th>
-                    <th>Hora de Entrega</th>
+                    <th>Fecha de Envío</th>
                     <th>Creado por</th>
                     <th>Operaciones</th>
                 </tr>
@@ -62,9 +62,9 @@
                 @foreach($news as $index => $data)
                     <tr>
                         <td>{{$items_per_page*($current_page - 1) + $index + 1}}</td>
+                        <td>{{$data['title']}}</td>
                         <td>{{$data['message']}}</td>
-                        <td>{{$data['delivery_date']}}</td>
-                        <td>{{date('H:i', strtotime($data['delivery_time']))}}</td>
+                        <td>{{date('d-m-Y', strtotime($data['created_at']))}}</td>
                         <td>@if($data->user !=null){{$data->user->name}} {{$data->user->surname}}@endif</td>
                         <td>
                             <a class="btn-floating btn-warning-cancel waves-effect waves-light red tooltipped"

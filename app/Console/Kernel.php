@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
             $db_penalty_percentage = DB::table('settings')->where('key','penalty_percentage')->first();
             $penalty_percentage = floatval($db_penalty_percentage->value);
 
-            $accounts = DB::table('accounts')->where('limit_payment_date','<',date('Y-m-d'))->get();
+            $accounts = DB::table('accounts')->where([['limit_payment_date','<',date('Y-m-d')],['is_active',1]])->get();
             foreach ($accounts as $account){
                 $account_limit_payment_date = strtotime($account->limit_payment_date);
                 $difference_days = strtotime(date('Y-m-d')) - $account_limit_payment_date;
@@ -46,8 +46,8 @@ class Kernel extends ConsoleKernel
                     ->where('id', $account->id)
                     ->update(['penalty' => $interest]);
             }
-        })->dailyAt($penalty_schedule->value.'');
-        //})->everyMinute();
+        //})->dailyAt($penalty_schedule->value.'');
+        })->everyMinute();
         //notificar a todos sobre el pago de cuotas
         $schedule->call(function () {
             $accounts = DB::table('accounts')->where('payment_date','=',date('Y-m-d'))->get();
