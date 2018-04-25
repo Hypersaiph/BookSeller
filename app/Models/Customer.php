@@ -9,7 +9,7 @@ class Customer extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'surname', 'nit'
+        'surname', 'nit','latitude','longitude'
     ];
     protected $dates = ['created_at','updated_at','deleted_at'];
     public function purchases(){

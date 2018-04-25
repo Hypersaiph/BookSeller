@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Syslog;
 use App\Transformers\CustomerTransformer;
 use Illuminate\Http\Request;
 use League\Fractal\Manager;
@@ -62,7 +63,37 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->user();
+        $user_id = $request->user()->id;
+
+        $name = $request->get('name');
+        $surname = $request->get('surname');
+        $nit = $request->get('nit');
+        $email = $request->get('email');
+        $address = $request->get('address');
+        $phone = $request->get('phone');
+        $latitude = $request->get('latitude');
+        $longitude = $request->get('longitude');
+        $note = $request->get('note');
+
+        $customer = new Customer([
+            'surname' => $surname,
+            'nit' => $nit,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ]);
+        $customer->save();
+        $customer->created_by = $user_id;
+        $customer->name = $name;
+        $customer->email = $email;
+        $customer->address = $address;
+        $customer->phone = $phone;
+        $customer->note = $note;
+        $customer->save();
+        (new Syslog())->log($user_id,$customer->id,'create','customers',1);
+        $data = array([
+            'message' => 'Registrado Correctamente'
+        ]);
+        return response()->json($data);
     }
 
     /**
@@ -85,6 +116,32 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user_id = $request->user()->id;
+
+        $name = $request->get('name');
+        $surname = $request->get('surname');
+        $nit = $request->get('nit');
+        $email = $request->get('email');
+        $address = $request->get('address');
+        $phone = $request->get('phone');
+        $latitude = $request->get('latitude');
+        $longitude = $request->get('longitude');
+        $note = $request->get('note');
+
+        $customer = Customer::find($id);
+        $customer->name = $name;
+        $customer->surname = $surname;
+        $customer->nit = $nit;
+        $customer->email = $email;
+        $customer->address = $address;
+        $customer->phone = $phone;
+        $customer->note = $note;
+        $customer->save();
+        (new Syslog())->log($user_id,$customer->id,'update','customers',1);
+
+        $data = array([
+            'message' => 'Actualizado Correctamente'
+        ]);
+        return response()->json($data);
     }
 }

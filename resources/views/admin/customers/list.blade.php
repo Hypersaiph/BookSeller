@@ -22,7 +22,7 @@
         <div class="col s10 m6 l6">
             <h5 class="breadcrumbs-title">Lista de Clientes</h5>
             <ol class="breadcrumbs">
-                <li><a href="{{ route('users.index') }}">Clientes</a></li>
+                <li><a href="{{ route('customers.index') }}">Clientes</a></li>
                 <li class="active">
                     @if ($search)
                         Búsqueda de: {{$search}}
