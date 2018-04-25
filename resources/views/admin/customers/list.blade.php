@@ -42,6 +42,7 @@
                     <div class="card-stacked">
                         <div class="card-content">
                             <p><i class="small mdi-alert-warning"></i> No se encontraron resultados.</p>
+                            <p><i class="small mdi-alert-warning"></i> No se encontraron resultados.</p>
                         </div>
                     </div>
                 </div>
