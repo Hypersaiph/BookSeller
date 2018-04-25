@@ -14,6 +14,7 @@ use App\Models\ManyToMany\BookGenre;
 use App\Models\ManyToMany\BookImage;
 use App\Models\ManyToMany\BookPublisher;
 use App\Models\Notification;
+use App\Models\Sale;
 use App\Models\Syslog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $this->sendNotification();
+        //$this->sendNotification();
         //(new Syslog())->log(Auth::user()->id,'22','create','books',1);
         $items_per_page = 10;
         $search = \Request::get('search');

@@ -32,4 +32,7 @@ Route::group(['prefix' => '/v1', 'middleware' => 'auth:api'], function() {
     Route::resource('type', 'Api\ProductTypeController', ['only' => [
         'index'
     ]]);
+    Route::resource('accounts', 'Admin\AccountController', ['only' => [
+        'update'
+    ]]);
 });
