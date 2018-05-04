@@ -102,7 +102,7 @@
                                 <i class="material-icons">remove_red_eye</i>
                             </a>
                             <a class="btn-floating waves-effect waves-light gradient-45deg-semi-dark gradient-shadow tooltipped"
-                               data-position="bottom" data-delay="10" data-tooltip="Tipos de Presentaciones"
+                               data-position="bottom" data-delay="10" data-tooltip="Formatos"
                                href="{{ route('book-type.index', ['book_id'=>$data['id']]) }}">
                                 <i class="material-icons">extension</i>
                             </a>

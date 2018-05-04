@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Editar Presentación
+    Editar Formato
 @endsection
 @section('css_assets')
 @endsection
@@ -12,13 +12,13 @@
 @section('navigation')
     <div class="row">
         <div class="col s12 m12 l12">
-            <h5 class="breadcrumbs-title">Editar Presentación</h5>
+            <h5 class="breadcrumbs-title">Editar Formato</h5>
             <ol class="breadcrumbs">
                 <li><a href="{{ route('books.index') }}">Libros</a></li>
                 <li><a href="{{ route('books.index') }}">Lista</a></li>
                 <li><a href="{{route('books.edit', ['id'=>$book_id])}}">{{ $book_title }}</a></li>
-                <li><a href="{{ route('book-type.index', ['book_id'=>$book_id]) }}">Presentaciones</a></li>
-                <li class="active">Editar Presentación</li>
+                <li><a href="{{ route('book-type.index', ['book_id'=>$book_id]) }}">Formatos</a></li>
+                <li class="active">Editar Formato</li>
             </ol>
         </div>
     </div>
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="card-panel">
-                    <h4 class="header2">Edición de Presentaciones</h4>
+                    <h4 class="header2">Edición de Formato</h4>
                     <div class="row">
                         <form action="{{route('book-type.update', ['id'=>$book_type->id])}}" enctype="multipart/form-data" method="post" class="col s12">
                             @csrf
@@ -41,7 +41,7 @@
                                         <option value="" disabled selected>Elegir</option>
                                         <option value="{{$book_type->type->id}}" @if($book_type->type->id==old('type_id')) selected @else selected @endif>{{$book_type->type->type}}</option>
                                     </select>
-                                    <label for="type_id">Presentación</label>
+                                    <label for="type_id">Formato</label>
                                     @if ($errors->has('type_id'))
                                         <span class="red-text text-darken-2">
                                             <strong>{{ $errors->first('type_id') }}</strong>

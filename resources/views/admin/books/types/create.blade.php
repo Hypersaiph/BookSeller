@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Crear Presentación
+    Crear Formato
 @endsection
 @section('css_assets')
 @endsection
@@ -12,13 +12,13 @@
 @section('navigation')
     <div class="row">
         <div class="col s12 m12 l12">
-            <h5 class="breadcrumbs-title">Crear Presentación</h5>
+            <h5 class="breadcrumbs-title">Crear Formato</h5>
             <ol class="breadcrumbs">
                 <li><a href="{{ route('books.index') }}">Libros</a></li>
                 <li><a href="{{ route('books.index') }}">Lista</a></li>
                 <li><a href="{{route('books.edit', ['id'=>$book_id])}}">{{ $book_title }}</a></li>
-                <li><a href="{{ route('book-type.index', ['book_id'=>$book_id]) }}">Presentaciones</a></li>
-                <li class="active">Crear Presentación</li>
+                <li><a href="{{ route('book-type.index', ['book_id'=>$book_id]) }}">Formato</a></li>
+                <li class="active">Crear Formato</li>
             </ol>
         </div>
     </div>
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="card-panel">
-                    <h4 class="header2">Registro de Presentaciones</h4>
+                    <h4 class="header2">Registro de Formato</h4>
                     <div class="row">
                         <form action="{{ route('book-type.store') }}" enctype="multipart/form-data" method="post" class="col s12">
                             @csrf
@@ -45,7 +45,7 @@
                                             @endif
                                         @endforeach
                                     </select>
-                                    <label for="type_id">Presentación</label>
+                                    <label for="type_id">Formato</label>
                                     @if ($errors->has('type_id'))
                                         <span class="red-text text-darken-2">
                                             <strong>{{ $errors->first('type_id') }}</strong>

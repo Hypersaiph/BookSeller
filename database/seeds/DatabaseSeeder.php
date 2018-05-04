@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(UserRoleTableSeeder::class);
 
         $this->call(LanguagesTableSeeder::class);
         $this->call(BooksTableSeeder::class);
@@ -43,5 +42,8 @@ class DatabaseSeeder extends Seeder
         $this->call(NewsTableSeeder::class);
         $this->call(SyslogsTableSeeder::class);
         //$this->call(SaleTypesTableSeeder::class);
+
+        //tablas secundarias
+        $this->call(UserRoleTableSeeder::class);
     }
 }

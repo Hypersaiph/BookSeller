@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        /*$penalty_schedule = DB::table('settings')->where('key','penalty_schedule')->first();
+        $penalty_schedule = DB::table('settings')->where('key','penalty_schedule')->first();
 
         //cuentas retrasadas
         $schedule->call(function () {
@@ -65,8 +65,8 @@ class Kernel extends ConsoleKernel
                     (new Notification())->notifyPaymentDate($token,"Hoy toca cobrar una cuota!","Cliente: ".$customer->name.' '.$customer->surname.', Monto: '.(floatval($account->amount)+floatval($account->penalty)).' Bs.');
                 }
             }
-        })->dailyAt('7:00');*/
-        //})->everyMinute();
+        //})->dailyAt('7:00');
+        })->everyMinute();
     }
 
     /**

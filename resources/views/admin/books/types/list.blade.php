@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Banners
+    Formatos
 @endsection
 @section('css_assets')
     <link href="{!! asset('vendors/sweetalert/dist/sweetalert.css') !!}" type="text/css" rel="stylesheet" media="screen,projection">
@@ -12,8 +12,8 @@
 @endsection
 @section('navigation')
     <div class="row">
-        <div class="col s10 m6 l6">
-            <h5 class="breadcrumbs-title">Lista de Banners</h5>
+        <div class="col s10 m10 l10">
+            <h5 class="breadcrumbs-title">Lista de Formatos</h5>
             <ol class="breadcrumbs">
                 <li><a href="{{ route('books.index') }}">Libros</a></li>
                 <li><a href="{{ route('books.index') }}">Lista</a></li>
