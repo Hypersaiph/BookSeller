@@ -13,7 +13,7 @@ class BookTypeTransformer extends TransformerAbstract
     public function transform(BookType $book_type){
         return [
             'book_type_id' => $book_type->id,
-            'type_id' => $book_type->type->id,
+            'type_id' => $book_type->type->id,//tapa dura, tapa suave o audiolibro
             'type' => $book_type->type->type,
             'price' => $book_type->price,
             'pages' => $book_type->pages,

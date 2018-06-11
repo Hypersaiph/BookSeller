@@ -55,4 +55,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','block']], function()
     ]]);
     Route::post('/settings', 'Admin\UserController@changeSystemSettings')->name('system_settings');
 });
-Route::get('/book/{id}', 'Admin\UserController@show')->name('book_profile');
+Route::get('/book/{id}', 'BookProfileController@show')->name('book_profile');

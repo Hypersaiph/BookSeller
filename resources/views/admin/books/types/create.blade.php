@@ -154,7 +154,7 @@
                                 <div class="input-field col s12 m6 l6">
                                     <i class="material-icons prefix">attach_file</i>
                                     <input name="weight" id="weight" type="number" step="any" class="validate" data-length="5" value="{{old('weight')}}" />
-                                    <label for="weight">Peso</label>
+                                    <label for="weight">Peso (Kg)</label>
                                     @if ($errors->has('weight'))
                                         <span class="red-text text-darken-2">
                                             <strong>{{ $errors->first('weight') }}</strong>

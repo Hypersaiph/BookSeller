@@ -52,19 +52,23 @@ class AccountController extends Controller
         $days_before_penalty = intval($this->settings->get('days_before_penalty',null));
 
         $start_date = strtotime($date);
+        $month_count = 0;
         foreach ($accounts as $key=>$account){
             if($account->id >= $selected_account_id){
-                if($account->id == $selected_account_id){
+                /*if($account->id == $selected_account_id){
                     $payment_date = $date;
                     $limit_payment_date = date("Y-m-d", strtotime("+".$days_before_penalty." days", strtotime($date)));
                 }else{
-                    $payment_date = date("Y-m-d", strtotime("+".($key-1)." month", $start_date));
+                    $payment_date = date("Y-m-d", strtotime("+".($key)." month", $start_date));
                     $limit_payment_date = date("Y-m-d", strtotime("+".$days_before_penalty." days", strtotime($payment_date)));
-                }
+                }*/
+                $payment_date = date("Y-m-d", strtotime("+".($month_count)." month", $start_date));
+                $limit_payment_date = date("Y-m-d", strtotime("+".$days_before_penalty." days", strtotime($payment_date)));
                 $account->payment_date = $payment_date;
                 $account->limit_payment_date = $limit_payment_date;
                 $account->save();
                 (new Syslog())->log($user_id,$account->id,'update','accounts',1);
+                $month_count = $month_count + 1;
             }
         }
         $data = array([

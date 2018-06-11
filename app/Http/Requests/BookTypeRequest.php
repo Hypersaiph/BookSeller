@@ -34,7 +34,7 @@ class BookTypeRequest extends FormRequest
             'price' => 'required|numeric|min:10|max:10000',
             'duration' => $type_id == 3? 'required|string|min:4|max:5' : '',
             'isbn10' => $type_id == 3? '' : 'required|string|min:3|max:60',
-            'isbn13' => $type_id == 3? '' : 'required|string|min:3|max:60',
+            'isbn13' => $type_id == 3? '' : 'max:60',
             'serial_cd' => $type_id == 3? 'required|string|min:3|max:60' : '',
 
             'width' => $type_id == 3? '' : 'required|string|min:1|max:5',

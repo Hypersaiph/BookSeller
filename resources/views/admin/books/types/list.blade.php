@@ -18,7 +18,7 @@
                 <li><a href="{{ route('books.index') }}">Libros</a></li>
                 <li><a href="{{ route('books.index') }}">Lista</a></li>
                 <li><a href="{{route('books.edit', ['id'=>$book_id])}}">{{ $book_title }}</a></li>
-                <li class="active">Presentaciones</li>
+                <li class="active">Formatos</li>
             </ol>
         </div>
     </div>
