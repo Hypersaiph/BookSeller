@@ -118,12 +118,12 @@ class SaleController extends Controller
             $interest = ($principal) * (floatval($anual_interest)/100) * ((intval($months)*30)/$days_in_year);
             $amount = ($principal + $interest) / intval($months);
             $start_date = strtotime($initial_date);
-            
-            for ($i=1 ; $i<=intval($months); $i++){
-                if($i == 1){
+
+            for ($i=1 ; $i<=intval($months); $i++) {
+                if ($i == 1) {
                     $payment_date = $initial_date;
                     $limit_payment_date = date("Y-m-d", strtotime("+".$days_before_penalty." days", strtotime($initial_date)));
-                }else{
+                } else {
                     $payment_date = date("Y-m-d", strtotime("+".($i-1)." month", $start_date));
                     $limit_payment_date = date("Y-m-d", strtotime("+".$days_before_penalty." days", strtotime($payment_date)));
                 }

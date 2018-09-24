@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel
                 $interest = ($account->amount) * ($difference_days/$days_in_year) * ($penalty_percentage/100);
                 DB::table('accounts')
                     ->where('id', $account->id)
-                    ->update(['penalty' => $interest]);
+                    ->update(['penalty' => round($interest, 2)]);
             }
         //})->dailyAt($penalty_schedule->value.'');
         })->everyMinute();
