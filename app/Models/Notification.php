@@ -4,6 +4,7 @@ namespace App\Models;
 
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Notification extends Model
 {
@@ -28,7 +29,7 @@ class Notification extends Model
     public function notifyPaymentDate($token, $title, $body){
         $client = new Client();
         $payload = array(
-            "to" => $token,
+            "to" => "/topics/".$token,
             "notification" => array(
                 "title" => $title,
                 "body" => $body,

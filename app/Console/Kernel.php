@@ -51,6 +51,7 @@ class Kernel extends ConsoleKernel
         //notificar a todos sobre el pago de cuotas
         $schedule->call(function () {
             $accounts = DB::table('accounts')->where('payment_date','=',date('Y-m-d'))->get();
+
             foreach ($accounts as $account){
                 $customer = DB::table('customers')
                     ->join('sales', 'customers.id', '=', 'sales.customer_id')
@@ -60,8 +61,8 @@ class Kernel extends ConsoleKernel
                     ->join('sales', 'users.id', '=', 'sales.user_id')
                     ->where('sales.id',$account->sale_id)
                     ->first();
-                $token = $user->name;
-                if($token != null && sizeof($token)>10){
+                $token = 'news';//$user->name;
+                if($token != null && sizeof($token)>0){
                     (new Notification())->notifyPaymentDate($token,
                         "Hoy toca cobrar una cuota!",
                         "Cliente: ".$customer->name
