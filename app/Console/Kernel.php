@@ -62,7 +62,12 @@ class Kernel extends ConsoleKernel
                     ->first();
                 $token = $user->name;
                 if($token != null && sizeof($token)>10){
-                    (new Notification())->notifyPaymentDate($token,"Hoy toca cobrar una cuota!","Cliente: ".$customer->name.' '.$customer->surname.', Monto: '.(floatval($account->amount)+floatval($account->penalty)).' Bs.');
+                    (new Notification())->notifyPaymentDate($token,
+                        "Hoy toca cobrar una cuota!",
+                        "Cliente: ".$customer->name
+                        .' '.$customer->surname
+                        .', Monto: '
+                        .(floatval($account->amount)+floatval($account->penalty)).' Bs.');
                 }
             }
         //})->dailyAt('7:00');
